@@ -12,7 +12,9 @@ import pandas as pd
 
 from databases import User, Tasks
 
-bot = Bot(token="5372598363:AAGVj7WRjJo22Bdd5r-U9-SShOntoz9wr-U") # For tests: "5390773324:AAHdwxZ0ktlIME0eU3_9Znc5ewaJHaVo64U"
+# For tests: 5390773324:AAHdwxZ0ktlIME0eU3_9Znc5ewaJHaVo64U
+# Working: 5372598363:AAGVj7WRjJo22Bdd5r-U9-SShOntoz9wr-U
+bot = Bot(token="5390773324:AAHdwxZ0ktlIME0eU3_9Znc5ewaJHaVo64U")
 
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage = storage)
@@ -66,7 +68,7 @@ async def take_tasks(message, list_of_tasks, today_or_yesterday):
 
         data_need = str(list_of_tasks[i][10])[:4] + "." + str(list_of_tasks[i][10])[4:]
         data_need = data_need[:7] + "." + data_need[7:]
-        cash_result = cash_result + f"""{i + 1}) Ссылка: {list_of_tasks[i][3]}\nКол-во голосов: {list_of_tasks[i][4]}\nТип задания: {list_of_tasks[i][5]}\nВремя ожидания: {list_of_tasks[i][6]}\nГорячая целевая позиция: {list_of_tasks[i][7]}\nКакую позицию удерживать: {list_of_tasks[i][8]}\nВремя добавления: {list_of_tasks[i][9]}   {data_need}\n\n"""
+        cash_result = cash_result + f"""{i + 1}) Ссылка: {list_of_tasks[i][3]}\nКол-во голосов: {list_of_tasks[i][4]}\nТип задания: {list_of_tasks[i][5]}\nВремя ожидания: {list_of_tasks[i][6]}\nЦелевая позиция: {list_of_tasks[i][7]}\nВремя закрепления поста: {list_of_tasks[i][8]}\nВремя добавления: {list_of_tasks[i][9]}   {data_need}\n\n"""
     if cash_result != "":
         if cash_check == 0:
             if today_or_yesterday == "сегодня":
@@ -286,7 +288,7 @@ async def take_hold_hours(message: types.Message, state: FSMContext):
             await Task_form.next()
 
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, selective=True)
-            markup.add("15 secs", "30 secs", "60 secs", "90 secs", "3 mins", "5 mins",
+            markup.add("15 secs", "20 secs", "30 secs", "40 secs", "60 secs", "90 secs", "2 mins", "3 mins", "5 mins",
                        "10 mins", "20 mins", "30 mins")
             await message.answer("⏳Выберите минимальное время ожидания между голосами, максимальное не гарантируется",
                                  reply_markup = markup)
@@ -297,8 +299,9 @@ async def take_hold_hours(message: types.Message, state: FSMContext):
     else:
         return await message.answer("""🚫 Введите число от 0 до 24!""")
 
-@dp.message_handler(lambda message: message.text not in ["15 secs", "30 secs", "60 secs", "90 secs", "3 mins", "5 mins",
-                                                         "10 mins", "20 mins", "30 mins"], state = Task_form.MIN_TIME)
+@dp.message_handler(lambda message: message.text not in ["15 secs", "20 secs", "30 secs", "40 secs",
+                                    "60 secs", "90 secs", "2 mins", "3 mins", "5 mins",
+                       "10 mins", "20 mins", "30 mins"], state = Task_form.MIN_TIME)
 async def process_gender_invalid(message: types.Message):
     return await message.answer("Нажмите пожалуйста на одну из кнопок!")
 
