@@ -14,7 +14,7 @@ from databases import User, Tasks
 
 # For tests: 5390773324:AAHdwxZ0ktlIME0eU3_9Znc5ewaJHaVo64U
 # Working: 5372598363:AAGVj7WRjJo22Bdd5r-U9-SShOntoz9wr-U
-bot = Bot(token="5390773324:AAHdwxZ0ktlIME0eU3_9Znc5ewaJHaVo64U")
+bot = Bot(token="5372598363:AAGVj7WRjJo22Bdd5r-U9-SShOntoz9wr-U")
 
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage = storage)
